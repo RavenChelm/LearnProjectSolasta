@@ -27,16 +27,16 @@ public class GridClass : MonoBehaviour
             for (int y = 0; y < parentSize.z; y++)
             {
                 //cell
-                var position_cell = new Vector3(x * (cellSize.x + offset) + (parentPosition.x - parentSize.x / 2 + cellSize.x / 2), parentPosition.y + (float)0.55, y * (cellSize.z + offset) + (parentPosition.z - parentSize.z / 2 + cellSize.z / 2));
+                var position_cell = new Vector3(x * (cellSize.x + offset) + (parentPosition.x - parentSize.x / 2 + cellSize.x / 2), parentPosition.y + cellSize.y, y * (cellSize.z + offset) + (parentPosition.z - parentSize.z / 2 + cellSize.z / 2));//у *0.955 нужен, чтобы бокс ложился ровно на землю, хз почему, но при 1 он взлетает немного. Случилось после увеличения колайдера на 0.001
                 var cell = Instantiate(_prefabCell, position_cell, Quaternion.identity);
                 cell.GetComponent<Transform>().SetParent(_child);
                 cell.name = $"Cell: X:{x}, Y:{y}";
                 //cell.setCoordinate(x, y);
 
-                //point
-                var pointPosition = new Vector3(position_cell.x, position_cell.y + 1, position_cell.z);
-                var point = Instantiate(_prefabPoint, pointPosition, Quaternion.identity, cell.transform);
-                point.name = $"Point :X:{x}, Y:{y}";
+                // //point
+                // var pointPosition = new Vector3(position_cell.x, position_cell.y, position_cell.z);
+                // var point = Instantiate(_prefabPoint, pointPosition, Quaternion.identity, cell.transform);
+                // point.name = $"Point :X:{x}, Y:{y}";
             }
         }
     }

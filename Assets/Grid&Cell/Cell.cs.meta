@@ -3,7 +3,13 @@ guid: 583c80fcacc112749b942b983bbfbf13
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - defaultColor: {instanceID: 0}
+  - changeColor: {instanceID: 0}
+  - _meshRenderer: {instanceID: 0}
+  - player: {instanceID: 0}
+  - point: {fileID: 3792876611010225782, guid: 45f3271e857a9954dbb416537c86ddfc, type: 3}
+  - CameFrom: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
