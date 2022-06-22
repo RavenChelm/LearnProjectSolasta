@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3178518681543756686}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -115,10 +115,6 @@ MonoBehaviour:
   changeColor: {fileID: 2100000, guid: 030ea5a6a33d70f4d92c70153f4d07c3, type: 2}
   _meshRenderer: {fileID: 5663529734769604396}
   player: {fileID: 4764018985791423782, guid: 075c32f90e633084f8f7bb2b7d73efcc, type: 3}
-  CameFrom: {fileID: 0}
-  PathLengthFromStart: 0
-  HeuristicEstimatePathLength: 0
-  distanseToPlayer: 0
   neighbours: []
 --- !u!54 &8263036968860356434
 Rigidbody:

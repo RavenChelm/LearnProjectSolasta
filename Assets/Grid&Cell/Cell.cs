@@ -9,33 +9,13 @@ public class Cell : MonoBehaviour
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] public GameObject player; //нужно ли SerializeField?
     private PlayerController _playerController;
-    private PathFinder _pathFndr;
-    //Навигация
-    public Cell CameFrom;
-    public float PathLengthFromStart;
-    public float HeuristicEstimatePathLength;
-    public float EstimateFullPathLength
-    {
-        get
-        {
-            return this.PathLengthFromStart + this.HeuristicEstimatePathLength;
-        }
-    }
-    //Конец навигации
-    public float distanseToPlayer;
     public List<Cell> neighbours;
 
-    // public Cell()
-    // {
-
-    // }
     private void Start()
     {
-
         player = GameObject.FindWithTag("Player");              //Не работает Ссылка на объект, при добоваление через инспектор
         _playerController = player.GetComponent<PlayerController>(); //Возможно изменить, если будет провисать оптимизация, слишком много объектов делают find, но хорошо, что один раз.
         _meshRenderer.enabled = false;
-        _pathFndr = GetComponent<PathFinder>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,13 +23,6 @@ public class Cell : MonoBehaviour
         if (other.tag == "Cell")
         { neighbours.Add(other.gameObject.GetComponent<Cell>()); }
     }
-
-
-
-
-
-
-
 
     private void OnMouseEnter()
     {
@@ -65,9 +38,7 @@ public class Cell : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (_playerController.inWay == false)
-        {
-            _playerController.setPath(this);
-        }
+        if (!_playerController.inWay)
+            _playerController.targetCell = this;
     }
 }

@@ -15,8 +15,6 @@ GameObject:
   - component: {fileID: 4764018985791423780}
   - component: {fileID: 3979213437921525012}
   - component: {fileID: 4764018985791423783}
-  - component: {fileID: 8919901682513477033}
-  - component: {fileID: -5561554574566408961}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -154,36 +152,3 @@ MonoBehaviour:
   inWay: 0
   path:
   - {fileID: 0}
---- !u!114 &8919901682513477033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4764018985791423782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 583c80fcacc112749b942b983bbfbf13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultColor: {fileID: 0}
-  changeColor: {fileID: 0}
-  _meshRenderer: {fileID: 0}
-  player: {fileID: 0}
-  CameFrom: {fileID: 0}
-  PathLengthFromStart: 0
-  HeuristicEstimatePathLength: 0
-  distanseToPlayer: 0
-  neighbours: []
---- !u!114 &-5561554574566408961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4764018985791423782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeb93bfb7c2b2db4f8c74604933a5f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
