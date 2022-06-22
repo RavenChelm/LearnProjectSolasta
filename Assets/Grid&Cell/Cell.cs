@@ -6,7 +6,7 @@ public class Cell : MonoBehaviour
 {
     [SerializeField] private Material defaultColor; // сейчас не нужно
     [SerializeField] private Material changeColor;
-    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] public MeshRenderer _meshRenderer;
     [SerializeField] public GameObject player; //нужно ли SerializeField?
     private PlayerController _playerController;
     public List<Cell> neighbours;
