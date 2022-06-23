@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         {
             targetCell = null;
         }
+        Debug.Log(m_Agent.hasPath);
     }
 
     private void OnTriggerEnter(Collider other)

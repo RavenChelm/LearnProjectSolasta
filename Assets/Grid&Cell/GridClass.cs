@@ -4,9 +4,9 @@ using UnityEngine;
 public class GridClass : MonoBehaviour
 {
     [SerializeField] private Cell _prefabCell;
-    [SerializeField] private Transform _prefabPoint;
     [SerializeField] private float offset;
     private Transform _child;
+    [SerializeField] private bool Visibility;
 
     [ContextMenu("Generate Grid")]
     public void GridAll()
@@ -34,12 +34,6 @@ public class GridClass : MonoBehaviour
                 var cell = Instantiate(_prefabCell, position_cell, Quaternion.identity);
                 cell.GetComponent<Transform>().SetParent(_child);
                 cell.name = $"Cell: X:{x}, Y:{y}";
-                //cell.setCoordinate(x, y);
-
-                // //point
-                // var pointPosition = new Vector3(position_cell.x, position_cell.y, position_cell.z);
-                // var point = Instantiate(_prefabPoint, pointPosition, Quaternion.identity, cell.transform);
-                // point.name = $"Point :X:{x}, Y:{y}";
             }
         }
     }
@@ -54,4 +48,19 @@ public class GridClass : MonoBehaviour
                 DestroyImmediate(_child.transform.GetChild(0).gameObject);
         }
     }
+    [ContextMenu("Visibility Grid")]
+    public void visibility_Grid()
+    {
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            var _childFlor = this.transform.GetChild(i);
+            for (int j = 0; j < _childFlor.childCount; j++)
+            {
+                var ChildMesh = _childFlor.GetChild(j).gameObject.GetComponent<MeshRenderer>();
+                ChildMesh.enabled = Visibility;
+            }
+        }
+    }
+
+    public void switch_Visibility(Transform _childFlor) { }
 }
