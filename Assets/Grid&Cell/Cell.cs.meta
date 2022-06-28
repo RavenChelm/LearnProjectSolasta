@@ -4,12 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - defaultColor: {instanceID: 0}
-  - changeColor: {instanceID: 0}
-  - _meshRenderer: {instanceID: 0}
-  - player: {instanceID: 0}
-  - point: {fileID: 3792876611010225782, guid: 45f3271e857a9954dbb416537c86ddfc, type: 3}
-  - CameFrom: {instanceID: 0}
+  - defaultColor: {fileID: 2100000, guid: 4c20a454f357f6f4096250d1f043f19a, type: 2}
+  - hoverColor: {fileID: 2100000, guid: 046549d0bfe3bfe4998f716de23783c1, type: 2}
+  - backColor: {fileID: 2100000, guid: 030ea5a6a33d70f4d92c70153f4d07c3, type: 2}
+  - _meshRenderer: {fileID: 5663529734769604396, guid: 16996432b1711e64d9b6a447eb6ece32, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
