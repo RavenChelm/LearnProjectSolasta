@@ -10,13 +10,22 @@ public class Cell : MonoBehaviour
     [SerializeField] public MeshRenderer _meshRenderer; //Нужно ли? 
     private PlayerController _playerController;
     public List<Cell> neighbours;
-    private int step = -1;
+    public int step = -1;
     public bool mark = false;
+    public bool sideCell = false;
     private int h = 0;
     private void Start()
     {
         _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>(); //Возможно изменить, если будет провисать оптимизация, слишком много объектов делают find, но хорошо, что один раз.
         ChangeColor(-1);
+    }
+
+    private void Update()
+    {
+        if (neighbours.Count > 8)
+        {
+            Debug.Log(this.name);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -26,12 +35,6 @@ public class Cell : MonoBehaviour
     private void OnMouseEnter()
     {
         ChangeColor(0);//Подсвечиваются при наведение мышки
-        // Debug.Log(Vector3.Distance(this.transform.position, neighbours[0].transform.position));
-        // Debug.Log(Vector3.Distance(this.transform.position, neighbours[1].transform.position));
-        // Debug.Log(Vector3.Distance(this.transform.position, neighbours[2].transform.position));
-        // Debug.Log(Vector3.Distance(this.transform.position, neighbours[3].transform.position));
-        // Debug.Log(Vector3.Distance(this.transform.position, neighbours[4].transform.position));
-        // Debug.Log(Vector3.Distance(this.transform.position, neighbours[5].transform.position));
     }
     private void OnMouseExit()
     {
@@ -43,8 +46,10 @@ public class Cell : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!_playerController.inWay)
-            _playerController.targetCell = this;
+        LeavingStepBackLight(0);
+        StepBackLight(0, this, false);
+        // if (!_playerController.inWay)
+        //     _playerController.targetCell = this;
     }
 
 
@@ -66,25 +71,74 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void StepBackLight(int lastStep)
+    public void StepBackLight(int lastStep, Cell parent, bool side)
     {
-        step = lastStep;
-        mark = true;
-        while (step < _playerController.AvalibleDistance)
+        step = lastStep; //получаем последний шаг
+        if (mark == false)//отмечаем ячейку как посещённую
+            mark = true;
+        else
+            return;
+        if (step < _playerController.AvalibleDistance) // дальность хода не превышенна 
+
+            for (int i = 0; i < neighbours.Count; i++) //цикл по соседям
+            {
+                //дистанция до соседней клетки. Нужна, чтобы отсеивать клетки по диагонали?
+                float distanceToNeigbours = Vector3.Distance(this.transform.position, neighbours[i].transform.position);
+                //дистанция до родительской клетки. Нужно для определение главной линии
+                float distanceToParent = Vector3.Distance(neighbours[i].transform.position, parent.transform.position);
+
+                //Если соседни клетки находятся по бокам на одном уровне или|| они побокам на уровень выше и && клетка не посещена
+                if (((distanceToNeigbours <= (float)1 + 0.05 && (distanceToNeigbours >= (float)1 - 0.05) && neighbours[i].h == this.h) || (
+                    (distanceToNeigbours == (float)1.414214) && neighbours[i].h == this.h + 1)))
+                {
+
+                    if (side == false)
+                    {
+                        //Если эта клетка находиться на главной оси или|| она родительская 
+                        if ((neighbours[i].transform.position.z == parent.transform.position.z || this == parent))
+                        {
+                            neighbours[i].ChangeColor(1);
+                            neighbours[i].StepBackLight((int)distanceToParent + 1, parent, false);
+                        }
+                        else if ((neighbours[i].transform.position.x == parent.transform.position.x))
+                        {
+                            neighbours[i].ChangeColor(1);
+                            neighbours[i].StepBackLight((int)distanceToParent + 1, parent, false);
+                        }
+                        else
+                        {
+                            neighbours[i].ChangeColor(1);
+                            neighbours[i].StepBackLight((int)distanceToParent + 2, parent: this, true);
+                        }
+                    }
+                    else
+                    {
+                        if (neighbours[i].transform.position.z == parent.transform.position.z)
+                        {
+                            neighbours[i].ChangeColor(1);
+                            neighbours[i].StepBackLight(step + 1, parent, true);
+                        }
+                        else if (neighbours[i].transform.position.x == parent.transform.position.x)
+                        {
+                            neighbours[i].ChangeColor(1);
+                            neighbours[i].StepBackLight(step + 1, parent, true);
+                        }
+                    }
+                }
+            }
+    }
+    public void LeavingStepBackLight(int lastStep)
+    {
+        mark = false;
+        step = 0;
+        if (lastStep < _playerController.AvalibleDistance - 1)
         {
             for (int i = 0; i < neighbours.Count; i++)
             {
-                float distanceToNeigbours = Vector3.Distance(this.transform.position, neighbours[i].transform.position);
-                if (((distanceToNeigbours == (float)1 && neighbours[i].h == this.h) ||
-                    (distanceToNeigbours == (float)1.414214) && neighbours[i].h == this.h + 1) &&  //Изменить дистанцую карабканья
-                    !neighbours[i].mark)
-                {
-                    step++;
-                    neighbours[i].ChangeColor(1);
-                    //neighbours[i].StepBackLight(step);
-                }
+                neighbours[i].ChangeColor(0);
+                neighbours[i].LeavingStepBackLight(lastStep + 1);
             }
+
         }
     }
 }
-

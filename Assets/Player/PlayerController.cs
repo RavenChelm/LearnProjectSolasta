@@ -32,11 +32,12 @@ public class PlayerController : MonoBehaviour
         if (targetCell != null && !m_Agent.hasPath)
         {
             m_Agent.destination = targetCell.transform.position;
-            this.nowCell.StepBackLight(0);
+            //this.targetCell.StepBackLight(0, nowCell, nowCell);
         }
         else
         {
             targetCell = null;
+
         }
         //Debug.Log(m_Agent.hasPath);
     }
@@ -45,15 +46,17 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Cell")
         {
-            this.nowCell = other.gameObject.GetComponent<Cell>();
+            nowCell = other.gameObject.GetComponent<Cell>();
+            nowCell.mark = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Cell")
         {
-            this.lasCell = other.gameObject.GetComponent<Cell>();
+            lasCell = other.gameObject.GetComponent<Cell>();
             lasCell.mark = false;
+            lasCell.step = -1;
         }
     }
 }
