@@ -61,6 +61,4 @@ public class GridClass : MonoBehaviour
             }
         }
     }
-
-    public void switch_Visibility(Transform _childFlor) { }
 }

@@ -46,10 +46,7 @@ public class Cell : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        LeavingStepBackLight(0);
-        StepBackLight(0, this, false);
-        // if (!_playerController.inWay)
-        //     _playerController.targetCell = this;
+        _playerController.SetTargetCell(this);
     }
 
 
@@ -79,7 +76,7 @@ public class Cell : MonoBehaviour
         else
             return;
         if (step < _playerController.AvalibleDistance) // дальность хода не превышенна 
-
+        {
             for (int i = 0; i < neighbours.Count; i++) //цикл по соседям
             {
                 //дистанция до соседней клетки. Нужна, чтобы отсеивать клетки по диагонали?
@@ -91,7 +88,6 @@ public class Cell : MonoBehaviour
                 if (((distanceToNeigbours <= (float)1 + 0.05 && (distanceToNeigbours >= (float)1 - 0.05) && neighbours[i].h == this.h) || (
                     (distanceToNeigbours == (float)1.414214) && neighbours[i].h == this.h + 1)))
                 {
-
                     if (side == false)
                     {
                         //Если эта клетка находиться на главной оси или|| она родительская 
@@ -126,6 +122,7 @@ public class Cell : MonoBehaviour
                     }
                 }
             }
+        }
     }
     public void LeavingStepBackLight(int lastStep)
     {
@@ -135,7 +132,7 @@ public class Cell : MonoBehaviour
         {
             for (int i = 0; i < neighbours.Count; i++)
             {
-                neighbours[i].ChangeColor(0);
+                neighbours[i].ChangeColor(-1);
                 neighbours[i].LeavingStepBackLight(lastStep + 1);
             }
 
