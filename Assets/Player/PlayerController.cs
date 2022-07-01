@@ -28,26 +28,36 @@ public class PlayerController : MonoBehaviour
     }
     private void MoveCharacter()
     {
-
         if (targetCell != null && !m_Agent.hasPath)
         {
             m_Agent.destination = targetCell.transform.position;
-            //this.targetCell.StepBackLight(0, nowCell, nowCell);
         }
         else
         {
             targetCell = null;
-
         }
-        //Debug.Log(m_Agent.hasPath);
+        if (m_Agent.velocity == Vector3.zero && inWay == true)
+        {
+            this.nowCell.LeavingStepBackLight(0);
+            this.nowCell.StepBackLight(0, nowCell, false);
+            inWay = false;
+        }
+        else
+        {
+            inWay = true;
+        }
     }
 
+    public void SetTargetCell(Cell target)
+    {
+        if (inWay == false)
+            targetCell = target;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Cell")
         {
             nowCell = other.gameObject.GetComponent<Cell>();
-            nowCell.mark = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -55,8 +65,6 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Cell")
         {
             lasCell = other.gameObject.GetComponent<Cell>();
-            lasCell.mark = false;
-            lasCell.step = -1;
         }
     }
 }
